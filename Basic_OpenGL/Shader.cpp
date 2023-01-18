@@ -135,3 +135,87 @@ void Shader::DestroyProgram()
 	glDeleteProgram(mShaderProgramID);
 }
 
+bool Shader::SendUniformData(const std::string& uniformName, GLint data)
+{
+	GLint ID = glGetUniformLocation(mShaderProgramID, uniformName.c_str());
+	if (ID == -1)
+	{
+		std::cout << "[ERR] Shader variable " << uniformName << " not used." << std::endl;
+		return false;
+	}
+
+	glUniform1i(ID, data);
+
+	return true;
+}
+
+bool Shader::SendUniformData(const std::string& uniformName, GLuint data)
+{
+	GLint ID = glGetUniformLocation(mShaderProgramID, uniformName.c_str());
+	if (ID == -1)
+	{
+		std::cout << "[ERR] Shader variable " << uniformName << " not used." << std::endl;
+		return false;
+	}
+
+	glUniform1ui(ID, data);
+
+	return true;
+}
+
+bool Shader::SendUniformData(const std::string& uniformName, GLfloat data)
+{
+	GLint ID = glGetUniformLocation(mShaderProgramID, uniformName.c_str());
+	if (ID == -1)
+	{
+		std::cout << "[ERR] Shader variable " << uniformName << " not used." << std::endl;
+		return false;
+	}
+
+	glUniform1f(ID, data);
+
+	return true;
+}
+
+bool Shader::SendUniformData(const std::string& uniformName, GLfloat x, GLfloat y)
+{
+	GLint ID = glGetUniformLocation(mShaderProgramID, uniformName.c_str());
+	if (ID == -1)
+	{
+		std::cout << "[ERR] Shader variable " << uniformName << " not used." << std::endl;
+		return false;
+	}
+
+	glUniform2f(ID, x, y);
+
+	return true;
+}
+
+bool Shader::SendUniformData(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z)
+{
+	GLint ID = glGetUniformLocation(mShaderProgramID, uniformName.c_str());
+	if (ID == -1)
+	{
+		std::cout << "[ERR] Shader variable " << uniformName << " not used." << std::endl;
+		return false;
+	}
+
+	glUniform3f(ID, x, y, z);
+
+	return true;
+}
+
+bool Shader::SendUniformData(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z, GLfloat w)
+{
+	GLint ID = glGetUniformLocation(mShaderProgramID, uniformName.c_str());
+	if (ID == -1)
+	{
+		std::cout << "[ERR] Shader variable " << uniformName << " not used." << std::endl;
+		return false;
+	}
+
+	glUniform4f(ID, x, y, z, w);
+
+	return true;
+}
+
