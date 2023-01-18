@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Input.h"
+#include "Quad.h"
 #include "Shader.h"
 #include "Screen.h"
  
@@ -23,54 +24,7 @@ int main(int argc, char* argv[])
 	float yPos = 0.0f;
 
 	//==========================================================
-	
-	GLfloat vertices[] = {
-		-0.5f,  0.5f, 0.0f,
-		 0.5f,  0.5f, 0.0f,
-		-0.5f, -0.5f, 0.0f, 
-
-		-0.5f, -0.5f, 0.0f,
-		 0.5f,  0.5f, 0.0f,
-		 0.5f, -0.5f, 0.0f
-	};
-
-	GLfloat colors[] = {
-		1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 1.0f, 1.0f,
-
-		0.0f, 1.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 1.0f, 0.0f
-	};
-	
-	GLuint shaderProgramID = Shader::Instance()->GetShaderProgramID();
-	
-	GLint vertexID = glGetAttribLocation(shaderProgramID, "position");
-	GLint colorID = glGetAttribLocation(shaderProgramID, "color");
-
-	GLuint vertexVBO;
-	GLuint colorVBO;
-	glGenBuffers(1, &vertexVBO);
-	glGenBuffers(1, &colorVBO);
-
-	GLuint VAO;
-	glGenVertexArrays(1, &VAO);
-
-	glBindVertexArray(VAO);
-
-		glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-		glVertexAttribPointer(vertexID, 3, GL_FLOAT, false, 0, nullptr);
-		glEnableVertexAttribArray(vertexID);
-
-		glBindBuffer(GL_ARRAY_BUFFER, colorVBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
-		glVertexAttribPointer(colorID, 3, GL_FLOAT, false, 0, nullptr);
-		glEnableVertexAttribArray(colorID);
-
-	glBindVertexArray(0);
-
+	Quad quad;
 	//==========================================================
 
 	while (isAppRunning)
@@ -103,19 +57,10 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-		glBindVertexArray(0);
+		quad.Render();
 
 		Screen::Instance()->Present();
 	}
-
-	glDeleteBuffers(1, &vertexVBO);
-	glDeleteBuffers(1, &colorVBO);
-	glDeleteVertexArrays(1, &VAO);
-
-	glDisableVertexAttribArray(vertexID);
-	glDisableVertexAttribArray(colorID);
 
 	Shader::Instance()->DetachShaders();
 	Shader::Instance()->DestroyShaders();
