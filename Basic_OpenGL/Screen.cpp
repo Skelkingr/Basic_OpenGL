@@ -1,16 +1,15 @@
 #include "Screen.h"
 
-Screen::Screen()
-	:
-	mWindow(nullptr),
-	mContext(nullptr)
-{}
-
 Screen* Screen::Instance()
 {
 	static Screen* screen = new Screen();
 	return screen;
 }
+Screen::Screen()
+	:
+	mWindow(nullptr),
+	mContext(nullptr)
+{}
 
 bool Screen::Initialize()
 {

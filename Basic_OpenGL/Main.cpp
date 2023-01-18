@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Input.h"
+#include "Shader.h"
 #include "Screen.h"
  
 int main(int argc, char* argv[])
@@ -8,6 +9,15 @@ int main(int argc, char* argv[])
 	bool isAppRunning = true;
 
 	Screen::Instance()->Initialize();
+
+	Shader::Instance()->CreateProgram();
+	Shader::Instance()->CreateShaders();
+
+	Shader::Instance()->CompileShaders("Shaders\\Main.vert", Shader::ShaderType::VERTEX_SHADER);
+	Shader::Instance()->CompileShaders("Shaders\\Main.frag", Shader::ShaderType::FRAGMENT_SHADER);
+
+	Shader::Instance()->AttachShaders();	
+	Shader::Instance()->LinkProgram();
 
 	float xPos = 0.0f;
 	float yPos = 0.0f;
@@ -40,27 +50,14 @@ int main(int argc, char* argv[])
 			{
 				yPos -= 0.001f;
 			}
-		}	
-
-		// OLD way of rendering a quad:
-		glBegin(GL_QUADS);
-
-			glColor3f(1.0f, 0.0f, 0.0f);
-			glVertex3f(xPos - 0.5f, yPos + 0.5f, 0.0f);
-
-			glColor3f(0.0f, 1.0f, 0.0f);
-			glVertex3f(xPos + 0.5f, yPos + 0.5f, 0.0f);
-
-			glColor3f(0.0f, 0.0f, 1.0f);
-			glVertex3f(xPos + 0.5f, yPos - 0.5f, 0.0f);
-
-			glColor3f(0.0f, 0.0f, 1.0f);
-			glVertex3f(xPos - 0.5f, yPos - 0.5f, 0.0f);
-
-		glEnd();
+		}
 
 		Screen::Instance()->Present();
 	}
+
+	Shader::Instance()->DetachShaders();
+	Shader::Instance()->DestroyShaders();
+	Shader::Instance()->DestroyProgram();
 
 	Screen::Instance()->Shutdown();
 
