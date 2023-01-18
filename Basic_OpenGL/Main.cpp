@@ -37,26 +37,7 @@ int main(int argc, char* argv[])
 
 		isAppRunning = !Input::Instance()->IsXClicked();
 
-		if (Input::Instance()->IsKeyPressed())
-		{
-			if (Input::Instance()->GetKeyDown() == 'q')
-			{
-				xPos -= 0.001f;
-			}
-			else if (Input::Instance()->GetKeyDown() == 'd')
-			{
-				xPos += 0.001f;
-			}
-			else if (Input::Instance()->GetKeyDown() == 'z')
-			{
-				yPos += 0.001f;
-			}
-			else if (Input::Instance()->GetKeyDown() == 's')
-			{
-				yPos -= 0.001f;
-			}
-		}
-
+		quad.Update();
 		quad.Render();
 
 		Screen::Instance()->Present();

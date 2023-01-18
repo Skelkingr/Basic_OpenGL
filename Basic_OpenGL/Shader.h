@@ -5,6 +5,8 @@
 #include <iostream>
 #include <string>
 
+#include <glm.hpp>
+
 #include "glad.h"
 
 class Shader
@@ -38,6 +40,7 @@ public:
 	bool SendUniformData(const std::string& uniformName, GLfloat x, GLfloat y);
 	bool SendUniformData(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z);
 	bool SendUniformData(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
+	bool SendUniformData(const std::string& uniformName, const glm::mat4& data);
 
 	GLuint GetShaderProgramID() const { return mShaderProgramID; }
 
