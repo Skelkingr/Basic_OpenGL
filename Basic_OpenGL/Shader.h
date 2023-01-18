@@ -39,6 +39,8 @@ public:
 	bool SendUniformData(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z);
 	bool SendUniformData(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
 
+	GLuint GetShaderProgramID() const { return mShaderProgramID; }
+
 private:
 	Shader();
 	Shader(const Shader&) = delete;
