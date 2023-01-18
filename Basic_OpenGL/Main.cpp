@@ -3,39 +3,69 @@
 #include <Windows.h>
 #include <gl/GL.h>
 
+#include "Input.h"
 #include "Screen.h"
-
-bool isAppRunning = true;
-
+ 
 int main(int argc, char* argv[])
 {
+	bool isAppRunning = true;
+
 	Screen::Instance()->Initialize();
+
+	float xPos = 0.0f;
+	float yPos = 0.0f;
 
 	while (isAppRunning)
 	{
 		Screen::Instance()->ClearScreen();
 
-		/*glBegin(GL_TRIANGLES);
+		Input::Instance()->Update();
 
-		glColor3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(-0.5f, 0.5f, 0.0f);
+		char keyPressed = Input::Instance()->GetKeyDown();
 
-		glColor3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(0.5f, 0.5f, 0.0f);
+		isAppRunning = !Input::Instance()->IsXClicked();
 
-		glColor3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(0.5f, -0.5f, 0.0f);
+		if (Input::Instance()->IsKeyPressed())
+		{
+			if (Input::Instance()->GetKeyDown() == 'q')
+			{
+				xPos -= 0.001f;
+			}
+			else if (Input::Instance()->GetKeyDown() == 'd')
+			{
+				xPos += 0.001f;
+			}
+			else if (Input::Instance()->GetKeyDown() == 'z')
+			{
+				yPos += 0.001f;
+			}
+			else if (Input::Instance()->GetKeyDown() == 's')
+			{
+				yPos -= 0.001f;
+			}
+		}
 
-		glColor3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(-0.5f, -0.5f, 0.0f);
+		// OLD way of rendering a quad:
+		glBegin(GL_QUADS);
 
-		glEnd();*/
+			glColor3f(1.0f, 0.0f, 0.0f);
+			glVertex3f(xPos - 0.5f, yPos + 0.5f, 0.0f);
+
+			glColor3f(0.0f, 1.0f, 0.0f);
+			glVertex3f(xPos + 0.5f, yPos + 0.5f, 0.0f);
+
+			glColor3f(0.0f, 0.0f, 1.0f);
+			glVertex3f(xPos + 0.5f, yPos - 0.5f, 0.0f);
+
+			glColor3f(0.0f, 0.0f, 1.0f);
+			glVertex3f(xPos - 0.5f, yPos - 0.5f, 0.0f);
+
+		glEnd();
 
 		Screen::Instance()->Present();
 	}
 
 	Screen::Instance()->Shutdown();
 
-	system("pause");
 	return 0;
 }
