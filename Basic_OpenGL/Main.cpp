@@ -1,8 +1,5 @@
 #include <iostream>
 
-#include <Windows.h>
-#include <gl/GL.h>
-
 #include "Input.h"
 #include "Screen.h"
  
@@ -43,7 +40,7 @@ int main(int argc, char* argv[])
 			{
 				yPos -= 0.001f;
 			}
-		}
+		}	
 
 		// OLD way of rendering a quad:
 		glBegin(GL_QUADS);

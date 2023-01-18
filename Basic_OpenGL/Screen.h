@@ -4,8 +4,9 @@
 #include <iostream>
 
 #include <Windows.h>
-#include <gl/GL.h>
 #include <SDL.h>
+
+#include "glad.h"
 
 class Screen
 {

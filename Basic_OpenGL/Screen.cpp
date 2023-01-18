@@ -31,7 +31,7 @@ bool Screen::Initialize()
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
 
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 5);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
 
 	mWindow = SDL_CreateWindow(
 		"Skelkingr",
@@ -53,6 +53,12 @@ bool Screen::Initialize()
 	if (!mContext)
 	{
 		std::cout << "[ERR] Error creating OpenGL mContext." << std::endl;
+		return false;
+	}
+
+	if (!gladLoadGL())
+	{
+		std::cout << "[ERR] Error loading extensions." << std::endl;
 		return false;
 	}
 
