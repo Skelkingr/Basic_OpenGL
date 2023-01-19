@@ -21,7 +21,7 @@ public:
 
 private:
 	Buffer mBuffer;
-	glm::mat4 mModelMatrix;
+	glm::mat4 mModel;
 	glm::vec3 mPosition;
 };
 

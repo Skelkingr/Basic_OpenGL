@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "Camera.h"
 #include "Input.h"
 #include "Quad.h"
 #include "Shader.h"
@@ -24,6 +25,7 @@ int main(int argc, char* argv[])
 	float yPos = 0.0f;
 
 	//==========================================================
+	Camera camera;
 	Quad quad;
 	//==========================================================
 
@@ -36,6 +38,8 @@ int main(int argc, char* argv[])
 		char keyPressed = Input::Instance()->GetKeyDown();
 
 		isAppRunning = !Input::Instance()->IsXClicked();
+
+		camera.Update();
 
 		quad.Update();
 		quad.Render();

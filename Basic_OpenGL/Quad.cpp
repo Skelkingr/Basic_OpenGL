@@ -2,7 +2,7 @@
 
 Quad::Quad()
 	:
-	mModelMatrix(glm::mat4(1.0f)),
+	mModel(glm::mat4(1.0f)),
 	mPosition(glm::vec3(0.0f))
 {
 	GLfloat vertices[] = {
@@ -39,7 +39,7 @@ Quad::Quad(GLfloat width, GLfloat height)
 	:
 	mPosition(glm::vec3(0.0f))
 {
-	mModelMatrix = glm::mat4(1.0f);
+	mModel = glm::mat4(1.0f);
 
 	GLfloat halfWidth = width * 0.5f;
 	GLfloat halfHeight = height * 0.5f;
@@ -83,30 +83,38 @@ void Quad::Update()
 {
 	if (Input::Instance()->IsKeyPressed())
 	{
-		if (Input::Instance()->GetKeyDown() == 'q')
+		if (Input::Instance()->GetKeyDown() == 'j')
 		{
 			mPosition.x -= 0.001f;
 		}
-		else if (Input::Instance()->GetKeyDown() == 'd')
+		else if (Input::Instance()->GetKeyDown() == 'l')
 		{
 			mPosition.x += 0.001f;
 		}
-		else if (Input::Instance()->GetKeyDown() == 'z')
+		else if (Input::Instance()->GetKeyDown() == 'i')
+		{
+			mPosition.z -= 0.001f;
+		}
+		else if (Input::Instance()->GetKeyDown() == 'k')
+		{
+			mPosition.z += 0.001f;
+		}
+		else if (Input::Instance()->GetKeyDown() == 'u')
 		{
 			mPosition.y += 0.001f;
 		}
-		else if (Input::Instance()->GetKeyDown() == 's')
+		else if (Input::Instance()->GetKeyDown() == 'o')
 		{
 			mPosition.y -= 0.001f;
 		}
 	}
 
-	mModelMatrix = glm::mat4(1.0f);
-	mModelMatrix = glm::translate(mModelMatrix, mPosition);
+	mModel = glm::mat4(1.0f);
+	mModel = glm::translate(mModel, mPosition);
 }
 
 void Quad::Render()
 {
-	Shader::Instance()->SendUniformData("model", mModelMatrix);
+	Shader::Instance()->SendUniformData("model", mModel);
 	mBuffer.Render(Buffer::TRIANGLES);
 }
