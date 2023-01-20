@@ -3,7 +3,7 @@
 Quad::Quad()
 	:
 	m_model(glm::mat4(1.0f)),
-	m_position(glm::vec3(0.0f))
+	m_position(glm::vec3(0.0f, 0.0f, -2.0f))
 {
 	GLfloat vertices[] = {
 		-0.5f,  0.5f, 0.0f,
