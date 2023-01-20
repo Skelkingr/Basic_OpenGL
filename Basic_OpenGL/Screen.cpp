@@ -7,8 +7,8 @@ Screen* Screen::Instance()
 }
 Screen::Screen()
 	:
-	mWindow(nullptr),
-	mContext(nullptr)
+	m_window(nullptr),
+	m_context(nullptr)
 {}
 
 bool Screen::Initialize()
@@ -32,7 +32,7 @@ bool Screen::Initialize()
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
 
-	mWindow = SDL_CreateWindow(
+	m_window = SDL_CreateWindow(
 		"Skelkingr",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
@@ -41,17 +41,17 @@ bool Screen::Initialize()
 		SDL_WINDOW_OPENGL
 	);
 
-	if (!mWindow)
+	if (!m_window)
 	{
-		std::cout << "[ERR] Error creating SDL mWindow." << std::endl;
+		std::cout << "[ERR] Error creating SDL m_window." << std::endl;
 		return false;
 	}
 
-	mContext = SDL_GL_CreateContext(mWindow);
+	m_context = SDL_GL_CreateContext(m_window);
 
-	if (!mContext)
+	if (!m_context)
 	{
-		std::cout << "[ERR] Error creating OpenGL mContext." << std::endl;
+		std::cout << "[ERR] Error creating OpenGL m_context." << std::endl;
 		return false;
 	}
 
@@ -71,13 +71,13 @@ void Screen::ClearScreen()
 
 void Screen::Present()
 {
-	SDL_GL_SwapWindow(mWindow);
+	SDL_GL_SwapWindow(m_window);
 }
 
 void Screen::Shutdown()
 {
-	SDL_GL_DeleteContext(mContext);
-	SDL_DestroyWindow(mWindow);
+	SDL_GL_DeleteContext(m_context);
+	SDL_DestroyWindow(m_window);
 	SDL_Quit();
 }
 

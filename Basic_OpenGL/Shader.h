@@ -42,7 +42,7 @@ public:
 	bool SendUniformData(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
 	bool SendUniformData(const std::string& uniformName, const glm::mat4& data);
 
-	GLuint GetShaderProgramID() const { return mShaderProgramID; }
+	GLuint GetShaderProgramID() const { return m_shaderProgramID; }
 
 private:
 	Shader();
@@ -50,9 +50,9 @@ private:
 	Shader& operator=(const Shader&) = delete;
 
 private:
-	GLuint mShaderProgramID;
-	GLuint mVertexShaderID;
-	GLuint mFragmentShaderID;
+	GLuint m_shaderProgramID;
+	GLuint m_vertexShaderID;
+	GLuint m_fragmentShaderID;
 };
 
 #endif

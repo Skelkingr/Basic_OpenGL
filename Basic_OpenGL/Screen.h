@@ -25,8 +25,8 @@ private:
 	Screen& operator=(const Screen&) = delete;
 
 private:
-	SDL_Window* mWindow;
-	SDL_GLContext mContext;
+	SDL_Window* m_window;
+	SDL_GLContext m_context;
 };
 
 #endif

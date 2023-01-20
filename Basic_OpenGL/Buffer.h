@@ -43,10 +43,10 @@ public:
 	void DestroyBuffer();
 
 private:
-	GLuint mVAO;
-	GLuint mVertexVBO;
-	GLuint mColorVBO;
-	GLuint mTotalVertices;
+	GLuint m_VAO;
+	GLuint m_vertexVBO;
+	GLuint m_colorVBO;
+	GLuint m_totalVertices;
 };
 
 #endif

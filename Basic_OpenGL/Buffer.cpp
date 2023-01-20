@@ -2,33 +2,33 @@
 
 Buffer::Buffer()
 	:
-	mVAO(0),
-	mVertexVBO(0),
-	mColorVBO(0),
-	mTotalVertices(0)
+	m_VAO(0),
+	m_vertexVBO(0),
+	m_colorVBO(0),
+	m_totalVertices(0)
 {}
 
 void Buffer::CreateBuffer(GLuint totalVertices)
 {
-	glGenBuffers(1, &mVertexVBO);
-	glGenBuffers(1, &mColorVBO);
+	glGenBuffers(1, &m_vertexVBO);
+	glGenBuffers(1, &m_colorVBO);
 
-	glGenVertexArrays(1, &mVAO);
+	glGenVertexArrays(1, &m_VAO);
 
-	mTotalVertices = totalVertices;
+	m_totalVertices = totalVertices;
 }
 
 void Buffer::FillVBO(VBOType vboType, GLfloat* data, GLsizeiptr bufferSize, FillType fillType)
 {
-	glBindVertexArray(mVAO);
+	glBindVertexArray(m_VAO);
 
 		if (vboType == VERTEX_BUFFER)
 		{
-			glBindBuffer(GL_ARRAY_BUFFER, mVertexVBO);
+			glBindBuffer(GL_ARRAY_BUFFER, m_vertexVBO);
 		}
 		else if (vboType == COLOR_BUFFER)
 		{
-			glBindBuffer(GL_ARRAY_BUFFER, mColorVBO);
+			glBindBuffer(GL_ARRAY_BUFFER, m_colorVBO);
 		}
 
 		glBufferData(GL_ARRAY_BUFFER, bufferSize, data, fillType);
@@ -42,15 +42,15 @@ void Buffer::LinkBuffer(const std::string& attribute, VBOType vboType, Component
 
 	GLint ID = glGetAttribLocation(shaderProgramID, attribute.c_str());
 
-	glBindVertexArray(mVAO);
+	glBindVertexArray(m_VAO);
 
 		if (vboType == VERTEX_BUFFER)
 		{
-			glBindBuffer(GL_ARRAY_BUFFER, mVertexVBO);
+			glBindBuffer(GL_ARRAY_BUFFER, m_vertexVBO);
 		}
 		else if (vboType == COLOR_BUFFER)
 		{
-			glBindBuffer(GL_ARRAY_BUFFER, mColorVBO);
+			glBindBuffer(GL_ARRAY_BUFFER, m_colorVBO);
 		}
 
 		glVertexAttribPointer(ID, componentType, dataType, false, 0, nullptr);
@@ -61,14 +61,14 @@ void Buffer::LinkBuffer(const std::string& attribute, VBOType vboType, Component
 
 void Buffer::Render(DrawType drawType)
 {
-	glBindVertexArray(mVAO);
-	glDrawArrays(drawType, 0, mTotalVertices);
+	glBindVertexArray(m_VAO);
+	glDrawArrays(drawType, 0, m_totalVertices);
 	glBindVertexArray(0);
 }
 
 void Buffer::DestroyBuffer()
 {
-	glDeleteBuffers(1, &mVertexVBO);
-	glDeleteBuffers(1, &mColorVBO);
-	glDeleteVertexArrays(1, &mVAO);	
+	glDeleteBuffers(1, &m_vertexVBO);
+	glDeleteBuffers(1, &m_colorVBO);
+	glDeleteVertexArrays(1, &m_VAO);	
 }

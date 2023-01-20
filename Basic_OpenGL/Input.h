@@ -11,21 +11,21 @@ public:
 	static Input* Instance();
 
 public:
-	bool IsXClicked() const { return mIsXClicked; }
-	bool IsKeyPressed() const { return mIsKeyPressed; }
+	bool IsXClicked() const { return m_isXClicked; }
+	bool IsKeyPressed() const { return m_isKeyPressed; }
 
-	char GetKeyUp() const { return mKeyUp; }
-	char GetKeyDown() const { return mKeyDown; }
+	char GetKeyUp() const { return m_keyUp; }
+	char GetKeyDown() const { return m_keyDown; }
 
-	bool IsLeftButtonClicked() const { return mIsLeftButtonClicked; }
-	bool IsRightButtonClicked() const { return mIsRightButtonClicked; }
-	bool IsMiddleButtonClicked() const { return mIsMiddleButtonClicked; }
+	bool IsLeftButtonClicked() const { return m_isLeftButtonClicked; }
+	bool IsRightButtonClicked() const { return m_isRightButtonClicked; }
+	bool IsMiddleButtonClicked() const { return m_isMiddleButtonClicked; }
 
-	int GetMouseMotionX() const { return mMouseMotionX; }	
-	int GetMouseMotionY() const { return mMouseMotionY; }
+	int GetMouseMotionX() const { return m_mouseMotionX; }	
+	int GetMouseMotionY() const { return m_mouseMotionY; }
 
-	int GetMousePositionX() const { return mMousePositionX; }
-	int GetMousePositionY() const { return mMousePositionY; }
+	int GetMousePositionX() const { return m_mousePositionX; }
+	int GetMousePositionY() const { return m_mousePositionY; }
 
 public:
 	void Update();
@@ -36,21 +36,21 @@ private:
 	Input& operator=(const Input&) = delete;
 
 private:
-	char mKeyUp;
-	char mKeyDown;
+	char m_keyUp;
+	char m_keyDown;
 
-	bool mIsXClicked;
-	bool mIsKeyPressed;
+	bool m_isXClicked;
+	bool m_isKeyPressed;
 
-	bool mIsLeftButtonClicked;
-	bool mIsRightButtonClicked;
-	bool mIsMiddleButtonClicked;
+	bool m_isLeftButtonClicked;
+	bool m_isRightButtonClicked;
+	bool m_isMiddleButtonClicked;
 
-	int mMouseMotionX;
-	int mMouseMotionY;
+	int m_mouseMotionX;
+	int m_mouseMotionY;
 
-	int mMousePositionX;
-	int mMousePositionY;
+	int m_mousePositionX;
+	int m_mousePositionY;
 };
 
 #endif

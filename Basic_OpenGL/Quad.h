@@ -20,9 +20,9 @@ public:
 	void Render();
 
 private:
-	Buffer mBuffer;
-	glm::mat4 mModel;
-	glm::vec3 mPosition;
+	Buffer m_buffer;
+	glm::mat4 m_model;
+	glm::vec3 m_position;
 };
 
 #endif

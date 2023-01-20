@@ -8,16 +8,16 @@ Shader* Shader::Instance()
 
 Shader::Shader()
 	:
-	mShaderProgramID(0),
-	mVertexShaderID(0),
-	mFragmentShaderID(0)
+	m_shaderProgramID(0),
+	m_vertexShaderID(0),
+	m_fragmentShaderID(0)
 {}
 
 bool Shader::CreateProgram()
 {
-	mShaderProgramID = glCreateProgram();
+	m_shaderProgramID = glCreateProgram();
 
-	if (mShaderProgramID == 0)
+	if (m_shaderProgramID == 0)
 	{
 		std::cout << "[ERR] Error creating shader program." << std::endl;
 		return false;
@@ -28,15 +28,15 @@ bool Shader::CreateProgram()
 
 bool Shader::CreateShaders()
 {
-	mVertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-	if (mVertexShaderID == 0)
+	m_vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
+	if (m_vertexShaderID == 0)
 	{
 		std::cout << "[ERR] Error creating vertex shader object." << std::endl;
 		return false;
 	}
 
-	mFragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-	if (mVertexShaderID == 0)
+	m_fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
+	if (m_vertexShaderID == 0)
 	{
 		std::cout << "[ERR] Error creating fragment shader object." << std::endl;
 		return false;
@@ -51,7 +51,7 @@ bool Shader::CompileShaders(const std::string& fileName, ShaderType shaderType)
 	std::string text;
 	std::string sourceCode;
 
-	GLuint shaderID = (shaderType == ShaderType::VERTEX_SHADER) ? mVertexShaderID : mFragmentShaderID;
+	GLuint shaderID = (shaderType == ShaderType::VERTEX_SHADER) ? m_vertexShaderID : m_fragmentShaderID;
 
 	file.open(fileName.c_str());
 	if (!file)
@@ -92,24 +92,24 @@ bool Shader::CompileShaders(const std::string& fileName, ShaderType shaderType)
 
 void Shader::AttachShaders()
 {
-	glAttachShader(mShaderProgramID, mVertexShaderID);
-	glAttachShader(mShaderProgramID, mFragmentShaderID);
+	glAttachShader(m_shaderProgramID, m_vertexShaderID);
+	glAttachShader(m_shaderProgramID, m_fragmentShaderID);
 }
 
 bool Shader::LinkProgram()
 {
-	glLinkProgram(mShaderProgramID);
-	glUseProgram(mShaderProgramID);
+	glLinkProgram(m_shaderProgramID);
+	glUseProgram(m_shaderProgramID);
 
 	GLint errorCode;
-	glGetProgramiv(mShaderProgramID, GL_LINK_STATUS, &errorCode);
+	glGetProgramiv(m_shaderProgramID, GL_LINK_STATUS, &errorCode);
 
 	if (errorCode == GL_FALSE)
 	{
 		GLchar errorMessage[1024];
 		GLsizei bufferSize = 1024;
 
-		glGetProgramInfoLog(mShaderProgramID, bufferSize, &bufferSize, errorMessage);
+		glGetProgramInfoLog(m_shaderProgramID, bufferSize, &bufferSize, errorMessage);
 
 		std::cout << "[ERR] " << errorMessage << std::endl;
 		return false;
@@ -120,24 +120,24 @@ bool Shader::LinkProgram()
 
 void Shader::DetachShaders()
 {
-	glDetachShader(mShaderProgramID, mVertexShaderID);
-	glDetachShader(mShaderProgramID, mFragmentShaderID);
+	glDetachShader(m_shaderProgramID, m_vertexShaderID);
+	glDetachShader(m_shaderProgramID, m_fragmentShaderID);
 }
 
 void Shader::DestroyShaders()
 {
-	glDeleteShader(mVertexShaderID);
-	glDeleteShader(mFragmentShaderID);
+	glDeleteShader(m_vertexShaderID);
+	glDeleteShader(m_fragmentShaderID);
 }
 
 void Shader::DestroyProgram()
 {
-	glDeleteProgram(mShaderProgramID);
+	glDeleteProgram(m_shaderProgramID);
 }
 
 bool Shader::SendUniformData(const std::string& uniformName, GLint data)
 {
-	GLint ID = glGetUniformLocation(mShaderProgramID, uniformName.c_str());
+	GLint ID = glGetUniformLocation(m_shaderProgramID, uniformName.c_str());
 	if (ID == -1)
 	{
 		std::cout << "[ERR] Shader variable " << uniformName << " not used." << std::endl;
@@ -151,7 +151,7 @@ bool Shader::SendUniformData(const std::string& uniformName, GLint data)
 
 bool Shader::SendUniformData(const std::string& uniformName, GLuint data)
 {
-	GLint ID = glGetUniformLocation(mShaderProgramID, uniformName.c_str());
+	GLint ID = glGetUniformLocation(m_shaderProgramID, uniformName.c_str());
 	if (ID == -1)
 	{
 		std::cout << "[ERR] Shader variable " << uniformName << " not used." << std::endl;
@@ -165,7 +165,7 @@ bool Shader::SendUniformData(const std::string& uniformName, GLuint data)
 
 bool Shader::SendUniformData(const std::string& uniformName, GLfloat data)
 {
-	GLint ID = glGetUniformLocation(mShaderProgramID, uniformName.c_str());
+	GLint ID = glGetUniformLocation(m_shaderProgramID, uniformName.c_str());
 	if (ID == -1)
 	{
 		std::cout << "[ERR] Shader variable " << uniformName << " not used." << std::endl;
@@ -179,7 +179,7 @@ bool Shader::SendUniformData(const std::string& uniformName, GLfloat data)
 
 bool Shader::SendUniformData(const std::string& uniformName, GLfloat x, GLfloat y)
 {
-	GLint ID = glGetUniformLocation(mShaderProgramID, uniformName.c_str());
+	GLint ID = glGetUniformLocation(m_shaderProgramID, uniformName.c_str());
 	if (ID == -1)
 	{
 		std::cout << "[ERR] Shader variable " << uniformName << " not used." << std::endl;
@@ -193,7 +193,7 @@ bool Shader::SendUniformData(const std::string& uniformName, GLfloat x, GLfloat 
 
 bool Shader::SendUniformData(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z)
 {
-	GLint ID = glGetUniformLocation(mShaderProgramID, uniformName.c_str());
+	GLint ID = glGetUniformLocation(m_shaderProgramID, uniformName.c_str());
 	if (ID == -1)
 	{
 		std::cout << "[ERR] Shader variable " << uniformName << " not used." << std::endl;
@@ -207,7 +207,7 @@ bool Shader::SendUniformData(const std::string& uniformName, GLfloat x, GLfloat 
 
 bool Shader::SendUniformData(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z, GLfloat w)
 {
-	GLint ID = glGetUniformLocation(mShaderProgramID, uniformName.c_str());
+	GLint ID = glGetUniformLocation(m_shaderProgramID, uniformName.c_str());
 	if (ID == -1)
 	{
 		std::cout << "[ERR] Shader variable " << uniformName << " not used." << std::endl;
@@ -221,7 +221,7 @@ bool Shader::SendUniformData(const std::string& uniformName, GLfloat x, GLfloat 
 
 bool Shader::SendUniformData(const std::string& uniformName, const glm::mat4& data)
 {
-	GLint ID = glGetUniformLocation(mShaderProgramID, uniformName.c_str());
+	GLint ID = glGetUniformLocation(m_shaderProgramID, uniformName.c_str());
 	if (ID == -1)
 	{
 		std::cout << "[ERR] Shader variable " << uniformName << " not used." << std::endl;

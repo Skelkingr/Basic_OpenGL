@@ -2,8 +2,8 @@
 
 Quad::Quad()
 	:
-	mModel(glm::mat4(1.0f)),
-	mPosition(glm::vec3(0.0f))
+	m_model(glm::mat4(1.0f)),
+	m_position(glm::vec3(0.0f))
 {
 	GLfloat vertices[] = {
 		-0.5f,  0.5f, 0.0f,
@@ -25,21 +25,21 @@ Quad::Quad()
 		0.0f, 1.0f, 0.0f
 	};
 
-	mBuffer = Buffer();
+	m_buffer = Buffer();
 
-	mBuffer.CreateBuffer(6);
-	mBuffer.FillVBO(Buffer::VERTEX_BUFFER, vertices, sizeof(vertices), Buffer::SINGLE);
-	mBuffer.FillVBO(Buffer::COLOR_BUFFER, colors, sizeof(colors), Buffer::SINGLE);
+	m_buffer.CreateBuffer(6);
+	m_buffer.FillVBO(Buffer::VERTEX_BUFFER, vertices, sizeof(vertices), Buffer::SINGLE);
+	m_buffer.FillVBO(Buffer::COLOR_BUFFER, colors, sizeof(colors), Buffer::SINGLE);
 
-	mBuffer.LinkBuffer("position", Buffer::VERTEX_BUFFER, Buffer::XYZ, Buffer::FLOAT);
-	mBuffer.LinkBuffer("color", Buffer::COLOR_BUFFER, Buffer::XYZ, Buffer::FLOAT);
+	m_buffer.LinkBuffer("position", Buffer::VERTEX_BUFFER, Buffer::XYZ, Buffer::FLOAT);
+	m_buffer.LinkBuffer("color", Buffer::COLOR_BUFFER, Buffer::XYZ, Buffer::FLOAT);
 }
 
 Quad::Quad(GLfloat width, GLfloat height)
 	:
-	mPosition(glm::vec3(0.0f))
+	m_position(glm::vec3(0.0f))
 {
-	mModel = glm::mat4(1.0f);
+	m_model = glm::mat4(1.0f);
 
 	GLfloat halfWidth = width * 0.5f;
 	GLfloat halfHeight = height * 0.5f;
@@ -64,19 +64,19 @@ Quad::Quad(GLfloat width, GLfloat height)
 		0.0f, 1.0f, 0.0f
 	};
 
-	mBuffer = Buffer();
+	m_buffer = Buffer();
 
-	mBuffer.CreateBuffer(6);
-	mBuffer.FillVBO(Buffer::VERTEX_BUFFER, vertices, sizeof(vertices), Buffer::SINGLE);
-	mBuffer.FillVBO(Buffer::COLOR_BUFFER, colors, sizeof(colors), Buffer::SINGLE);
+	m_buffer.CreateBuffer(6);
+	m_buffer.FillVBO(Buffer::VERTEX_BUFFER, vertices, sizeof(vertices), Buffer::SINGLE);
+	m_buffer.FillVBO(Buffer::COLOR_BUFFER, colors, sizeof(colors), Buffer::SINGLE);
 
-	mBuffer.LinkBuffer("position", Buffer::VERTEX_BUFFER, Buffer::XYZ, Buffer::FLOAT);
-	mBuffer.LinkBuffer("color", Buffer::COLOR_BUFFER, Buffer::XYZ, Buffer::FLOAT);
+	m_buffer.LinkBuffer("position", Buffer::VERTEX_BUFFER, Buffer::XYZ, Buffer::FLOAT);
+	m_buffer.LinkBuffer("color", Buffer::COLOR_BUFFER, Buffer::XYZ, Buffer::FLOAT);
 }
 
 Quad::~Quad()
 {
-	mBuffer.DestroyBuffer();
+	m_buffer.DestroyBuffer();
 }
 
 void Quad::Update()
@@ -85,36 +85,36 @@ void Quad::Update()
 	{
 		if (Input::Instance()->GetKeyDown() == 'j')
 		{
-			mPosition.x -= 0.001f;
+			m_position.x -= 0.001f;
 		}
 		else if (Input::Instance()->GetKeyDown() == 'l')
 		{
-			mPosition.x += 0.001f;
+			m_position.x += 0.001f;
 		}
 		else if (Input::Instance()->GetKeyDown() == 'i')
 		{
-			mPosition.z -= 0.001f;
+			m_position.z -= 0.001f;
 		}
 		else if (Input::Instance()->GetKeyDown() == 'k')
 		{
-			mPosition.z += 0.001f;
+			m_position.z += 0.001f;
 		}
 		else if (Input::Instance()->GetKeyDown() == 'u')
 		{
-			mPosition.y += 0.001f;
+			m_position.y += 0.001f;
 		}
 		else if (Input::Instance()->GetKeyDown() == 'o')
 		{
-			mPosition.y -= 0.001f;
+			m_position.y -= 0.001f;
 		}
 	}
 
-	mModel = glm::mat4(1.0f);
-	mModel = glm::translate(mModel, mPosition);
+	m_model = glm::mat4(1.0f);
+	m_model = glm::translate(m_model, m_position);
 }
 
 void Quad::Render()
 {
-	Shader::Instance()->SendUniformData("model", mModel);
-	mBuffer.Render(Buffer::TRIANGLES);
+	Shader::Instance()->SendUniformData("model", m_model);
+	m_buffer.Render(Buffer::TRIANGLES);
 }
