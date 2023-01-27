@@ -1,10 +1,10 @@
 #include "Quad.h"
 
 Quad::Quad()
-	:
-	m_model(glm::mat4(1.0f)),
-	m_position(glm::vec3(0.0f, -0.5f, -2.0f))
 {
+	m_model = glm::mat4(1.0f);
+	m_position = glm::vec3(0.0f, -0.5f, -2.0f);
+
 	GLfloat vertices[] = {
 		-0.5f,  0.5f, 0.0f,
 		 0.5f,  0.5f, 0.0f,
@@ -47,14 +47,17 @@ Quad::Quad()
 	m_buffer.LinkBuffer("tex", Buffer::TEXTURE_BUFFER, Buffer::UV, Buffer::FLOAT);
 
 	m_texture.Load("Textures\\Crate_1.png");
+
+	m_shininess = 50.0f;
+	m_ambient = glm::vec3(0.4f, 0.4f, 0.4f);
+	m_diffuse = glm::vec3(0.1f, 0.7f, 0.2f);
+	m_specular = glm::vec3(0.8f, 0.8f, 0.8f);
 }
 
 Quad::Quad(GLfloat width, GLfloat height)
-	:
-	m_model(glm::mat4(1.0f)),
-	m_position(glm::vec3(0.0f, -0.5f, -2.0f))
 {
 	m_model = glm::mat4(1.0f);
+	m_position = glm::vec3(0.0f, -0.5f, -2.0f);
 
 	GLfloat halfWidth = width * 0.5f;
 	GLfloat halfHeight = height * 0.5f;
@@ -101,6 +104,11 @@ Quad::Quad(GLfloat width, GLfloat height)
 	m_buffer.LinkBuffer("tex", Buffer::TEXTURE_BUFFER, Buffer::UV, Buffer::FLOAT);
 
 	m_texture.Load("Textures\\Crate_1.png");
+
+	m_shininess = 50.0f;
+	m_ambient = glm::vec3(0.4f, 0.4f, 0.4f);
+	m_diffuse = glm::vec3(0.1f, 0.7f, 0.2f);
+	m_specular = glm::vec3(0.8f, 0.8f, 0.8f);
 }
 
 Quad::~Quad()
@@ -146,8 +154,15 @@ void Quad::Update()
 void Quad::Render()
 {
 	Shader::Instance()->SendUniformData("model", m_model);
+	Shader::Instance()->SendUniformData("isLit", true);
+	Shader::Instance()->SendUniformData("isTextured", false);
 
-	m_texture.Bind();
+	Shader::Instance()->SendUniformData("shininess", m_shininess);
+	Shader::Instance()->SendUniformData("material.ambient", m_ambient.r, m_ambient.g, m_ambient.b);
+	Shader::Instance()->SendUniformData("material.diffuse", m_diffuse.r, m_diffuse.g, m_diffuse.b);
+	Shader::Instance()->SendUniformData("material.specular", m_specular.r, m_specular.g, m_specular.b);
+
+	//m_texture.Bind();
 	m_buffer.Render(Buffer::TRIANGLES);
-	m_texture.Unbind();
+	//m_texture.Unbind();
 }
