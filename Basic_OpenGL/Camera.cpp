@@ -50,4 +50,5 @@ void Camera::Update()
 
 	m_view = glm::lookAt(m_position, m_position + m_direction, m_up);
 	Shader::Instance()->SendUniformData("view", m_view);
+	Shader::Instance()->SendUniformData("cameraPosition", m_position.x, m_position.y, m_position.z);
 }
