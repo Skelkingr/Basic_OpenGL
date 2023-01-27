@@ -16,13 +16,23 @@ Quad::Quad()
 	};
 
 	GLfloat colors[] = {
-		1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
+			  		
+		1.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f
+	};
 
-		0.0f, 1.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 1.0f, 0.0f
+	GLfloat textureUVs[] = {
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		0.0f, 0.0f,
+
+		0.0f, 0.0f,
+		1.0f, 1.0f,
+		1.0f, 0.0f
 	};
 
 	m_buffer = Buffer();
@@ -30,14 +40,19 @@ Quad::Quad()
 	m_buffer.CreateBuffer(6);
 	m_buffer.FillVBO(Buffer::VERTEX_BUFFER, vertices, sizeof(vertices), Buffer::SINGLE);
 	m_buffer.FillVBO(Buffer::COLOR_BUFFER, colors, sizeof(colors), Buffer::SINGLE);
+	m_buffer.FillVBO(Buffer::TEXTURE_BUFFER, textureUVs, sizeof(textureUVs), Buffer::SINGLE);
 
 	m_buffer.LinkBuffer("position", Buffer::VERTEX_BUFFER, Buffer::XYZ, Buffer::FLOAT);
-	m_buffer.LinkBuffer("color", Buffer::COLOR_BUFFER, Buffer::XYZ, Buffer::FLOAT);
+	m_buffer.LinkBuffer("color", Buffer::COLOR_BUFFER, Buffer::RGB, Buffer::FLOAT);
+	m_buffer.LinkBuffer("tex", Buffer::TEXTURE_BUFFER, Buffer::UV, Buffer::FLOAT);
+
+	m_texture.Load("Textures\\Crate_1.png");
 }
 
 Quad::Quad(GLfloat width, GLfloat height)
 	:
-	m_position(glm::vec3(0.0f))
+	m_model(glm::mat4(1.0f)),
+	m_position(glm::vec3(0.0f, 0.0f, -2.0f))
 {
 	m_model = glm::mat4(1.0f);
 
@@ -55,13 +70,23 @@ Quad::Quad(GLfloat width, GLfloat height)
 	};
 
 	GLfloat colors[] = {
-		1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
 
-		0.0f, 1.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 1.0f, 0.0f
+		1.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f
+	};
+
+	GLfloat textureUVs[] = {
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		0.0f, 0.0f,
+
+		0.0f, 0.0f,
+		1.0f, 1.0f,
+		1.0f, 0.0f
 	};
 
 	m_buffer = Buffer();
@@ -69,9 +94,13 @@ Quad::Quad(GLfloat width, GLfloat height)
 	m_buffer.CreateBuffer(6);
 	m_buffer.FillVBO(Buffer::VERTEX_BUFFER, vertices, sizeof(vertices), Buffer::SINGLE);
 	m_buffer.FillVBO(Buffer::COLOR_BUFFER, colors, sizeof(colors), Buffer::SINGLE);
+	m_buffer.FillVBO(Buffer::TEXTURE_BUFFER, textureUVs, sizeof(textureUVs), Buffer::SINGLE);
 
 	m_buffer.LinkBuffer("position", Buffer::VERTEX_BUFFER, Buffer::XYZ, Buffer::FLOAT);
-	m_buffer.LinkBuffer("color", Buffer::COLOR_BUFFER, Buffer::XYZ, Buffer::FLOAT);
+	m_buffer.LinkBuffer("color", Buffer::COLOR_BUFFER, Buffer::RGB, Buffer::FLOAT);
+	m_buffer.LinkBuffer("tex", Buffer::TEXTURE_BUFFER, Buffer::UV, Buffer::FLOAT);
+
+	m_texture.Load("Textures\\Crate_1.png");
 }
 
 Quad::~Quad()
@@ -116,5 +145,8 @@ void Quad::Update()
 void Quad::Render()
 {
 	Shader::Instance()->SendUniformData("model", m_model);
+
+	m_texture.Bind();
 	m_buffer.Render(Buffer::TRIANGLES);
+	m_texture.Unbind();
 }

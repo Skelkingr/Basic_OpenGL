@@ -8,6 +8,7 @@
 #include "glad.h"
 #include "Input.h"
 #include "Shader.h"
+#include "Texture.h"
 
 class Quad
 {
@@ -21,8 +22,11 @@ public:
 
 private:
 	Buffer m_buffer;
+	Texture m_texture;
+
 	glm::mat4 m_model;
 	glm::vec3 m_position;
+
 };
 
 #endif
