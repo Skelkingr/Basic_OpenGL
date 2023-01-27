@@ -5,6 +5,9 @@ in vec2 vs_tex;
 
 out vec4 fragColor;
 
+uniform bool isLit;
+uniform bool isTextured;
+
 uniform sampler2D textureImg;
 
 void main()

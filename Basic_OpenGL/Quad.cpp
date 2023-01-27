@@ -3,7 +3,7 @@
 Quad::Quad()
 	:
 	m_model(glm::mat4(1.0f)),
-	m_position(glm::vec3(0.0f, 0.0f, -2.0f))
+	m_position(glm::vec3(0.0f, -0.5f, -2.0f))
 {
 	GLfloat vertices[] = {
 		-0.5f,  0.5f, 0.0f,
@@ -52,7 +52,7 @@ Quad::Quad()
 Quad::Quad(GLfloat width, GLfloat height)
 	:
 	m_model(glm::mat4(1.0f)),
-	m_position(glm::vec3(0.0f, 0.0f, -2.0f))
+	m_position(glm::vec3(0.0f, -0.5f, -2.0f))
 {
 	m_model = glm::mat4(1.0f);
 
@@ -140,6 +140,7 @@ void Quad::Update()
 
 	m_model = glm::mat4(1.0f);
 	m_model = glm::translate(m_model, m_position);
+	m_model = glm::rotate(m_model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 }
 
 void Quad::Render()
