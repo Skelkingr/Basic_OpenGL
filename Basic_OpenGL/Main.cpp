@@ -2,6 +2,7 @@
 
 #include "Camera.h"
 #include "Input.h"
+#include "Light.h"
 #include "Quad.h"
 #include "Shader.h"
 #include "Screen.h"
@@ -29,6 +30,8 @@ int main(int argc, char* argv[])
 	camera.Set3DView();
 
 	Quad quad;
+
+	Light light;
 	//==========================================================
 
 	while (isAppRunning)
@@ -42,6 +45,10 @@ int main(int argc, char* argv[])
 		isAppRunning = !Input::Instance()->IsXClicked();
 
 		camera.Update();
+
+		light.Update();
+		light.Render();
+		light.SendToShader();
 
 		quad.Update();
 		quad.Render();

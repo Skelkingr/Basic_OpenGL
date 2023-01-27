@@ -44,14 +44,14 @@ void main()
 		/* Diffuse */
 		vec3 normal = vec3(0.0, 1.0, 0.0);
 		vec3 lightDirection = normalize(light.position - vs_vertex);
-		float lightIntensity = dot(lightDirection, normal);
+		float lightIntensity = max(dot(lightDirection, normal), 0.0);
 		vec3 diffuseColor = light.diffuse * material.diffuse * lightIntensity;
 		/* */
 
 		/* Specular */
 		vec3 viewDirection = normalize(cameraPosition - vs_vertex);
 		vec3 reflection = reflect(-lightDirection, normal);
-		float specularTerm = pow(dot(viewDirection, reflection), material.shininess);
+		float specularTerm = pow(max(dot(viewDirection, reflection), 0.0), material.shininess);
 		vec3 specularColor = light.specular * material.specular * specularTerm;
 		/* */
 
